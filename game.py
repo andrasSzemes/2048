@@ -219,40 +219,6 @@ def move_down():
                 table[1][j] = table[0][j]
                 table[0][j] = 0
 
-    def __call__(self):
-        import sys, tty, termios
-        fd = sys.stdin.fileno()
-        old_settings = termios.tcgetattr(fd)
-        try:
-            tty.setraw(sys.stdin.fileno())
-            ch = sys.stdin.read(1)
-        finally:
-            termios.tcsetattr(fd, termios.TCSADRAIN, old_settings)
-        return ch
-
-    def __call__(self):
-        import sys, tty, termios
-        fd = sys.stdin.fileno()
-        old_settings = termios.tcgetattr(fd)
-        try:
-            tty.setraw(sys.stdin.fileno())
-            ch = sys.stdin.read(1)
-        finally:
-            termios.tcsetattr(fd, termios.TCSADRAIN, old_settings)
-        return ch
-
-
-    def __call__(self):
-        import sys, tty, termios
-        fd = sys.stdin.fileno()
-        old_settings = termios.tcgetattr(fd)
-        try:
-            tty.setraw(sys.stdin.fileno())
-            ch = sys.stdin.read(1)
-        finally:
-            termios.tcsetattr(fd, termios.TCSADRAIN, old_settings)
-        return ch
-
 def __call__(self):
     import sys, tty, termios
     fd = sys.stdin.fileno()
@@ -330,7 +296,7 @@ def menu():
     [0,0,0,0]]
     put_in_random_number()
     put_in_random_number()
-    
+
     os.system('clear')
     width = os.get_terminal_size().columns
     header()
@@ -436,6 +402,6 @@ put_in_random_number()
 put_in_random_number()
 
 #____________________________________________________________________________________________________
-os.system('clear') #képernyő törlése
+os.system('clear') #clear screen
 
 menu()
