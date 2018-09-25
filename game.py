@@ -5,6 +5,8 @@ import os #needed to clear screen
 from copy import deepcopy #needed for table copy
 from termcolor import colored
 
+
+
 def header(): #2048 set as header so that it can be diplayed even if the screen is cleared
     width = os.get_terminal_size().columns #gets the width of the terminal size, so that displayed parts can be centered
     s = '''        
@@ -30,8 +32,17 @@ def print_table():
     for i in range(4):
         formatted_table(table[i])
 
+def get_color_escape(r, g, b, background=False):
+    return '\033[{};2;{};{};{}m'.format(48 if background else 38, r, g, b)
+
+def color_print(r1, g1, b1, r2, g2, b2, s):
+    RESET = '\033[0m'
+    print(get_color_escape(r1, g1, b1), get_color_escape(r2, g2, b2, True)
+        , s.center(24)
+        , RESET,)
+
 def print_tableBIG():
-    
+    width = os.get_terminal_size().columns
 
 def put_in_random_number():
     number=[2,4]
@@ -409,12 +420,8 @@ put_in_random_number()
 #____________________________________________________________________________________________________
 os.system('clear') #clear screen
 
-<<<<<<< HEAD
 header()
 print_table()
 print_tableBIG()
 
-game()
-=======
 menu()
->>>>>>> 67685c1f82f13372a1ca5c8f47a7aaebacd025d4
