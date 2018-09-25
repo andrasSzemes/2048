@@ -102,10 +102,27 @@ def color_print(r1, g1, b1, r2, g2, b2, s):
     RESET = '\033[0m'
     print(get_color_escape(r1, g1, b1), get_color_escape(r2, g2, b2, True)
         , s.center(24)
-        , RESET,)
+        , RESET, end=' ')
 
 def print_tableBIG():
     width = os.get_terminal_size().columns
+
+    for rowsInTable in range(4):
+        for rowsInASCIINumbers in range(10):
+            print(''.rjust(int(width/2 - 57)), end='')
+            for numbersInTableRow in range(4):
+                if table[rowsInTable][numbersInTableRow] == 0:
+                    exec(list_0[rowsInASCIINumbers])
+                if table[rowsInTable][numbersInTableRow] == 2:
+                    exec(list_2[rowsInASCIINumbers])
+                if table[rowsInTable][numbersInTableRow] == 4:
+                    exec(list_4[rowsInASCIINumbers])
+                if table[rowsInTable][numbersInTableRow] == 8:
+                    exec(list_8[rowsInASCIINumbers])
+                if table[rowsInTable][numbersInTableRow] == 16:
+                    exec(list_16[rowsInASCIINumbers])
+            print('')
+        print()
 
 def put_in_random_number():
     number=[2,4]
