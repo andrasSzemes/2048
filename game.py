@@ -321,6 +321,16 @@ def game():
 
 def menu():
 
+    global table
+    
+    table = [
+    [0,0,0,0],
+    [0,0,0,0],
+    [0,0,0,0],
+    [0,0,0,0]]
+    put_in_random_number()
+    put_in_random_number()
+    
     os.system('clear')
     width = os.get_terminal_size().columns
     header()
