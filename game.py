@@ -31,8 +31,8 @@ def print_table():
         formatted_table(table[i])
 
 def print_tableBIG():
+    pass
     
-
 def put_in_random_number():
     number=[2,4]
     if 0 in table[0]+table[1]+table[2]+table[3]:
@@ -99,6 +99,14 @@ def transpose_table():                                          #have to be syme
         for x in range(4):                                      #tablaban egyes elemek adott oszlopban
             transposedTable[i].append(table[x][i])
     table = transposedTable
+
+def transpose_down():
+    global table
+    downTable = [[],[],[],[]]
+    for i in range(4):
+        for j in range(4):
+            downTable[i].append(table[j][i])
+    table=downTable
 
 def is_lose(): #tries to move to the right, then saves the standing. Resets the table and tries to move to down. If both have the same results, the game is lost.
     global table
@@ -181,46 +189,9 @@ def move_right():
                 table[i][0] = 0
 
 def move_down():
-    for j in range(4):
-
-            if table[1][j] is 0 and table[2][j] is 0 and table[3][j] == table[0][j]:
-                table[3][j] = table[3][j]*2
-                table[0][j] = 0 
-
-            if table[3][j] == table[2][j]:
-                table[3][j]=table[3][j]*2
-                table[2][j] = 0
-            elif table[2][j] == table[1][j]:
-                table[2][j]=table[2][j]*2
-                table[1][j] = 0
-            elif table[1][j] == table[0][j]:
-                table[1][j]=table[1][j]*2
-                table[0][j] = 0
-
-            elif table[1][j] is 0 and table[2][j] == table[0][j]:
-                table[2][j] = table[2][j]*2
-                table[0][j] = 0
-            elif table[1][j] is 0 and table[3][j] == table[0][j]:
-                table[3][j] = table[3][j]*2
-                table[0][j] = 0
-            elif table[2][j] is 0 and table[3][j] == table[1][j]:
-                table[3][j] = table[3][j]*2
-                table[1][j] = 0
-
-            if table[1][j] is 0:
-                table[1][j] = table[0][j]
-                table[0][j] = 0
-
-            if table[2][j] is 0:
-                table[2][j] = table[1][j]
-                table[1][j] = table[0][j]
-                table[0][j] = 0
-
-            if table[3][j] is 0:
-                table[3][j] = table[2][j]
-                table[2][j] = table[1][j]
-                table[1][j] = table[0][j]
-                table[0][j] = 0
+    transpose_down()
+    move_right()
+    transpose_down()
 
 def __call__(self):
     import sys, tty, termios
@@ -409,12 +380,8 @@ put_in_random_number()
 #____________________________________________________________________________________________________
 os.system('clear') #clear screen
 
-<<<<<<< HEAD
 header()
 print_table()
 print_tableBIG()
 
-game()
-=======
 menu()
->>>>>>> 67685c1f82f13372a1ca5c8f47a7aaebacd025d4
