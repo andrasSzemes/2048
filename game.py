@@ -1,10 +1,12 @@
 import random
-import os #kell a kepernyo torleshez
-from copy import deepcopy #kell a táblázatmásoláshoz
+import sys
+import time
+import os #needed to clear screen
+from copy import deepcopy #needed for table copy
 from termcolor import colored
 
-def header(): #header lett a 2048-ból, hogy mindig ottmaradjon a tábla fölött képtörlés esetén is
-    width = os.get_terminal_size().columns #középre igazításhoz megállapítja a terminál szélességét
+def header(): #2048 set as header so that it can be diplayed even if the screen is cleared
+    width = os.get_terminal_size().columns #gets the width of the terminal size, so that displayed parts can be centered
     s = '''        
       .--~*teu.        .n~~%x.             xeee       u+=~~~+u.    
      dF     988Nx    x88X   888.          d888R     z8F      `8N.  
@@ -19,8 +21,8 @@ def header(): #header lett a 2048-ból, hogy mindig ottmaradjon a tábla fölöt
      ""    "**"`       ^"==="`         "*%%%%%%**~    ^"====="`     '''
     print(colored(('\n'.join(l.center(width) for l in s.splitlines())), 'cyan'), '\n')
 
-def formatted_table(table): #meghatározza a tábla formátumát
-    width = os.get_terminal_size().columns #középre igazításhoz megállapítja a terminál szélességét
+def formatted_table(table): #sets the format of the table
+    width = os.get_terminal_size().columns #gets the width of the terminal size, so that displayed parts can be centered
     formatted = u'{:^4} {:^4} {:^4} {:^4}'.format(table[0], table[1], table[2], table[3])
     print(str(formatted).center(width))
 
@@ -42,11 +44,53 @@ def put_in_random_number():
             put_in_random_number()
 
 def lose(): #probably this will call a new file with an asci art
-    import lose
+    os.system('clear')
+    width = os.get_terminal_size().columns
+
+    s = '''   
+    ▓██   ██▓ ▒█████   █    ██    ▓█████▄  ██▓▓█████ ▓█████▄ 
+    ▒██  ██▒▒██▒  ██▒ ██  ▓██▒   ▒██▀ ██▌▓██▒▓█   ▀ ▒██▀ ██▌
+    ▒██ ██░▒██░  ██▒▓██  ▒██░   ░██   █▌▒██▒▒███   ░██   █▌
+    ░ ▐██▓░▒██   ██░▓▓█  ░██░   ░▓█▄   ▌░██░▒▓█  ▄ ░▓█▄   ▌
+    ░ ██▒▓░░ ████▓▒░▒▒█████▓    ░▒████▓ ░██░░▒████▒░▒████▓ 
+    ██▒▒▒ ░ ▒░▒░▒░ ░▒▓▒ ▒ ▒     ▒▒▓  ▒ ░▓  ░░ ▒░ ░ ▒▒▓  ▒ 
+    ▓██ ░▒░   ░ ▒ ▒░ ░░▒░ ░ ░     ░ ▒  ▒  ▒ ░ ░ ░  ░ ░ ▒  ▒ 
+    ▒ ▒ ░░  ░ ░ ░ ▒   ░░░ ░ ░     ░ ░  ░  ▒ ░   ░    ░ ░  ░ 
+    ░ ░         ░ ░     ░           ░     ░     ░  ░   ░    
+    ░ ░                           ░                  ░          '''
+    print(colored(('\n'.join(l.center(width) for l in s.splitlines())), 'red'), '\n')
+    print("1 Main Menu".center(width))
+    print("2 Exit".center(width))
+
+    loseOption = 1
+    loseOption = __call__(loseOption)
+    if loseOption == '1':
+        menu()
+    if loseOption == '2':
+        exit()
 
 def win():
-    if 2048 in table[0]+table[1]+table[2]+table[3]:
-        import win
+    if 16 in table[0]+table[1]+table[2]+table[3]:
+        os.system('clear')
+        width = os.get_terminal_size().columns
+        s = '''
+        ██╗    ██╗██╗███╗   ██╗███╗   ██╗███████╗██████╗     ██╗    ██╗██╗███╗   ██╗███╗   ██╗███████╗██████╗     ██████╗  ██████╗ ██████╗ ██╗  ██╗    ██╗     ██╗   ██╗███╗   ██╗ ██████╗██╗  ██╗
+        ██║    ██║██║████╗  ██║████╗  ██║██╔════╝██╔══██╗    ██║    ██║██║████╗  ██║████╗  ██║██╔════╝██╔══██╗    ██╔══██╗██╔═══██╗██╔══██╗██║ ██╔╝    ██║     ██║   ██║████╗  ██║██╔════╝██║  ██║
+        ██║ █╗ ██║██║██╔██╗ ██║██╔██╗ ██║█████╗  ██████╔╝    ██║ █╗ ██║██║██╔██╗ ██║██╔██╗ ██║█████╗  ██████╔╝    ██████╔╝██║   ██║██████╔╝█████╔╝     ██║     ██║   ██║██╔██╗ ██║██║     ███████║
+        ██║███╗██║██║██║╚██╗██║██║╚██╗██║██╔══╝  ██╔══██╗    ██║███╗██║██║██║╚██╗██║██║╚██╗██║██╔══╝  ██╔══██╗    ██╔═══╝ ██║   ██║██╔══██╗██╔═██╗     ██║     ██║   ██║██║╚██╗██║██║     ██╔══██║
+        ╚███╔███╔╝██║██║ ╚████║██║ ╚████║███████╗██║  ██║    ╚███╔███╔╝██║██║ ╚████║██║ ╚████║███████╗██║  ██║    ██║     ╚██████╔╝██║  ██║██║  ██╗    ███████╗╚██████╔╝██║ ╚████║╚██████╗██║  ██║
+        ╚══╝╚══╝ ╚═╝╚═╝  ╚═══╝╚═╝  ╚═══╝╚══════╝╚═╝  ╚═╝     ╚══╝╚══╝ ╚═╝╚═╝  ╚═══╝╚═╝  ╚═══╝╚══════╝╚═╝  ╚═╝    ╚═╝      ╚═════╝ ╚═╝  ╚═╝╚═╝  ╚═╝    ╚══════╝ ╚═════╝ ╚═╝  ╚═══╝ ╚═════╝╚═╝  ╚═╝
+        '''
+        print(colored(('\n'.join(l.center(width) for l in s.splitlines())), 'yellow'), '\n')
+        print("1 Main Menu".center(width))
+        print("2 Exit".center(width))
+        
+        winOption = 1
+        winOption = __call__(winOption)
+        if winOption == '1':
+            menu()
+        if winOption == '2':
+            exit()
 
 def transpose_table():                                          #have to be symetrical
     global table
@@ -56,7 +100,7 @@ def transpose_table():                                          #have to be syme
             transposedTable[i].append(table[x][i])
     table = transposedTable
 
-def is_lose(): #elmozdíjta az aktuális állást jobbra, visszaállítja és elmozdítja le. Ha a kettő egyezik, és nincs bennük 0, az állás nem megnyerhető.
+def is_lose(): #tries to move to the right, then saves the standing. Resets the table and tries to move to down. If both have the same results, the game is lost.
     global table
 
     temp=deepcopy(table) #table bekerül a tempbe
@@ -223,6 +267,26 @@ def __call__(self):
         termios.tcsetattr(fd, termios.TCSADRAIN, old_settings)
     return ch
 
+def slowprint(s):
+  for c in s + '\n':
+    sys.stdout.write(c)
+    sys.stdout.flush()
+    time.sleep(1./80)
+
+def slowprintX(s):
+    spacing = ''
+    #spaces = 
+    for i in range(int(width/2 - len(s)/2)):
+        spacing = spacing + ' '
+    for c in spacing:
+        sys.stdout.write(c)
+        sys.stdout.flush()
+        time.sleep(1./1000)
+    for c in s + '\n':
+        sys.stdout.write(c)
+        sys.stdout.flush()
+        time.sleep(1./1)
+
 def game():
     doesItChange = deepcopy(table)
 
@@ -260,6 +324,114 @@ def game():
     is_lose()
     game()
 
+def menu():
+
+    global table
+    
+    table = [
+    [0,0,0,0],
+    [0,0,0,0],
+    [0,0,0,0],
+    [0,0,0,0]]
+    put_in_random_number()
+    put_in_random_number()
+    
+    os.system('clear')
+    width = os.get_terminal_size().columns
+    header()
+    print("1. New Game".center(width))
+    print("2. Rules".center(width))
+    print("3. Credits".center(width))
+    print("4. Exit Game".center(width))
+    print("\n")
+    choice = print("Choose an option!".center(width))
+
+    menuOption = 1
+    menuOption = __call__(menuOption)
+    if menuOption == '1':
+        game()
+        menuOption = 1
+    if menuOption == '2':
+        rules()
+        menuOption = 1
+    if menuOption == '3':
+        credits()
+        menuOption = 1
+    if menuOption == '4':
+        exit()
+
+def rules():
+    os.system('clear')
+    width = os.get_terminal_size().columns
+    print("Use your W, A, S and D keys to move the tiles. When two tiles with the same number touch, they merge into one!".center(width))
+    print("Try to get to 2048!".center(width))
+    print("Press 1 to go back to the Main Menu.".center(width))
+
+    menuOption = 1
+    menuOption = __call__(menuOption)
+    if menuOption == '1':
+        menu()
+
+def credits():
+    width = os.get_terminal_size().columns
+
+    os.system('clear')
+
+    s = '''        
+    ██████╗  ██████╗ ██╗  ██╗ █████╗ 
+    ╚════██╗██╔═████╗██║  ██║██╔══██╗
+    █████╔╝██║██╔██║███████║╚█████╔╝
+    ██╔═══╝ ████╔╝██║╚════██║██╔══██╗
+    ███████╗╚██████╔╝     ██║╚█████╔╝
+    ╚══════╝ ╚═════╝      ╚═╝ ╚════╝ '''
+    print(colored (('\n'.join(l.center(width) for l in s.splitlines())), 'green'), '\n')
+
+    time.sleep(1.5)
+    #os.system('clear')
+    slowprint("Directed by: Michael Bay".center(width))
+    slowprint("Music: Hans Zimmer".center(width))
+    print()
+    slowprint("STARRING:".center(width))
+    #os.system('clear')
+    print()
+    slowprint("Christian Bale - 2048".center(width))
+    slowprint("Helen Mirren - 1024".center(width))
+    slowprint("Lupita Nyong'o - 512".center(width))
+    slowprint("Steven Seagal - 256".center(width))
+    slowprint("Scarlett Johansson - 128".center(width))
+    slowprint("Jack Nicholson - 64".center(width))
+    slowprint("Kevin Costner - 32".center(width))
+    slowprint("David Hasselhoff - 16".center(width))
+    slowprint("Andy Serkis - 8 (motion capture)".center(width))
+    slowprint("Emma Stone - 4".center(width))
+    #os.system('clear')
+    print()
+    slowprint("WITH".center(width))
+    print()
+    time.sleep(1)
+    #os.system('clear')
+    slowprint("Samuel L Jackson as 2".center(width))
+    time.sleep(3)
+    os.system('clear')
+    print('\n\n\n')
+    slowprintX("....")
+    slowprint("Incoming transmission".center(width))
+    time.sleep(1)
+    slowprint("Decoding".center(width))
+    slowprintX("....")
+    os.system('clear')
+    time.sleep(1)
+    slowprint(colored ('''██╗  ██╗ ██████╗  █████╗  ██████╗ ''', 'green').center(width))
+    slowprint(colored ('''██║  ██║██╔═████╗██╔══██╗██╔════╝ ''', 'green').center(width))
+    slowprint(colored ('''███████║██║██╔██║╚██████║███████╗ ''', 'green').center(width))
+    slowprint(colored ('''╚════██║████╔╝██║ ╚═══██║██╔═══██╗''', 'green').center(width))
+    slowprint(colored ('''     ██║╚██████╔╝ █████╔╝╚██████╔╝''', 'green').center(width))
+    slowprint(colored ('''     ╚═╝ ╚═════╝  ╚════╝  ╚═════╝ ''', 'green').center(width))
+    print()
+    print("The numbers will return...".center(width))
+    time.sleep(3)
+    menu()
+
 table = [
 [0,0,0,0],
 [0,0,0,0],
@@ -271,8 +443,12 @@ put_in_random_number()
 #____________________________________________________________________________________________________
 os.system('clear') #képernyő törlése
 
+<<<<<<< HEAD
 header()
 print_table()
 print_tableBIG()
 
 game()
+=======
+menu()
+>>>>>>> 67685c1f82f13372a1ca5c8f47a7aaebacd025d4
