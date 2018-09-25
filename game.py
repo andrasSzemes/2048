@@ -41,11 +41,53 @@ def put_in_random_number():
             put_in_random_number()
 
 def lose(): #probably this will call a new file with an asci art
-    import lose
+    os.system('clear')
+    width = os.get_terminal_size().columns
+
+    s = '''   
+    ▓██   ██▓ ▒█████   █    ██    ▓█████▄  ██▓▓█████ ▓█████▄ 
+    ▒██  ██▒▒██▒  ██▒ ██  ▓██▒   ▒██▀ ██▌▓██▒▓█   ▀ ▒██▀ ██▌
+    ▒██ ██░▒██░  ██▒▓██  ▒██░   ░██   █▌▒██▒▒███   ░██   █▌
+    ░ ▐██▓░▒██   ██░▓▓█  ░██░   ░▓█▄   ▌░██░▒▓█  ▄ ░▓█▄   ▌
+    ░ ██▒▓░░ ████▓▒░▒▒█████▓    ░▒████▓ ░██░░▒████▒░▒████▓ 
+    ██▒▒▒ ░ ▒░▒░▒░ ░▒▓▒ ▒ ▒     ▒▒▓  ▒ ░▓  ░░ ▒░ ░ ▒▒▓  ▒ 
+    ▓██ ░▒░   ░ ▒ ▒░ ░░▒░ ░ ░     ░ ▒  ▒  ▒ ░ ░ ░  ░ ░ ▒  ▒ 
+    ▒ ▒ ░░  ░ ░ ░ ▒   ░░░ ░ ░     ░ ░  ░  ▒ ░   ░    ░ ░  ░ 
+    ░ ░         ░ ░     ░           ░     ░     ░  ░   ░    
+    ░ ░                           ░                  ░          '''
+    print(colored(('\n'.join(l.center(width) for l in s.splitlines())), 'red'), '\n')
+    print("1 Main Menu".center(width))
+    print("2 Exit".center(width))
+
+    loseOption = 1
+    loseOption = __call__(loseOption)
+    if loseOption == '1':
+        menu()
+    if loseOption == '2':
+        exit()
 
 def win():
-    if 2048 in table[0]+table[1]+table[2]+table[3]:
-        import win
+    if 16 in table[0]+table[1]+table[2]+table[3]:
+        os.system('clear')
+        width = os.get_terminal_size().columns
+        s = '''
+        ██╗    ██╗██╗███╗   ██╗███╗   ██╗███████╗██████╗     ██╗    ██╗██╗███╗   ██╗███╗   ██╗███████╗██████╗     ██████╗  ██████╗ ██████╗ ██╗  ██╗    ██╗     ██╗   ██╗███╗   ██╗ ██████╗██╗  ██╗
+        ██║    ██║██║████╗  ██║████╗  ██║██╔════╝██╔══██╗    ██║    ██║██║████╗  ██║████╗  ██║██╔════╝██╔══██╗    ██╔══██╗██╔═══██╗██╔══██╗██║ ██╔╝    ██║     ██║   ██║████╗  ██║██╔════╝██║  ██║
+        ██║ █╗ ██║██║██╔██╗ ██║██╔██╗ ██║█████╗  ██████╔╝    ██║ █╗ ██║██║██╔██╗ ██║██╔██╗ ██║█████╗  ██████╔╝    ██████╔╝██║   ██║██████╔╝█████╔╝     ██║     ██║   ██║██╔██╗ ██║██║     ███████║
+        ██║███╗██║██║██║╚██╗██║██║╚██╗██║██╔══╝  ██╔══██╗    ██║███╗██║██║██║╚██╗██║██║╚██╗██║██╔══╝  ██╔══██╗    ██╔═══╝ ██║   ██║██╔══██╗██╔═██╗     ██║     ██║   ██║██║╚██╗██║██║     ██╔══██║
+        ╚███╔███╔╝██║██║ ╚████║██║ ╚████║███████╗██║  ██║    ╚███╔███╔╝██║██║ ╚████║██║ ╚████║███████╗██║  ██║    ██║     ╚██████╔╝██║  ██║██║  ██╗    ███████╗╚██████╔╝██║ ╚████║╚██████╗██║  ██║
+        ╚══╝╚══╝ ╚═╝╚═╝  ╚═══╝╚═╝  ╚═══╝╚══════╝╚═╝  ╚═╝     ╚══╝╚══╝ ╚═╝╚═╝  ╚═══╝╚═╝  ╚═══╝╚══════╝╚═╝  ╚═╝    ╚═╝      ╚═════╝ ╚═╝  ╚═╝╚═╝  ╚═╝    ╚══════╝ ╚═════╝ ╚═╝  ╚═══╝ ╚═════╝╚═╝  ╚═╝
+        '''
+        print(colored(('\n'.join(l.center(width) for l in s.splitlines())), 'yellow'), '\n')
+        print("1 Main Menu".center(width))
+        print("2 Exit".center(width))
+        
+        winOption = 1
+        winOption = __call__(winOption)
+        if winOption == '1':
+            menu()
+        if winOption == '2':
+            exit()
 
 def transpose_table():                                          #have to be symetrical
     global table
@@ -278,6 +320,7 @@ def game():
     game()
 
 def menu():
+
     os.system('clear')
     width = os.get_terminal_size().columns
     header()
