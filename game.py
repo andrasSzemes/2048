@@ -106,6 +106,10 @@ def color_print(r1, g1, b1, r2, g2, b2, s):
 
 def print_tableBIG():
     width = os.get_terminal_size().columns
+    heigh = os.get_terminal_size().lines
+
+    for emptylines in range(int(heigh/2) - 22):
+        print()
 
     for rowsInTable in range(4):
         for rowsInASCIINumbers in range(10):
@@ -338,15 +342,15 @@ def game():
 
     if doesItChange == table:
         os.system('clear')
-        header()
-        print_table()
+        #header()
+        #print_table()
         print_tableBIG()
         game()
 
     os.system('clear')
     put_in_random_number()
-    header()
-    print_table()
+    #header()
+    #print_table()
     print_tableBIG()
     win()
     is_lose()
@@ -471,8 +475,8 @@ put_in_random_number()
 #____________________________________________________________________________________________________
 os.system('clear') #clear screen
 
-header()
-print_table()
+#header()
+#print_table()
 print_tableBIG()
 
 menu()
