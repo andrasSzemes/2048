@@ -30,6 +30,9 @@ def print_table():
     for i in range(4):
         formatted_table(table[i])
 
+def print_tableBIG():
+    
+
 def put_in_random_number():
     number=[2,4]
     if 0 in table[0]+table[1]+table[2]+table[3]:
@@ -275,12 +278,14 @@ def game():
         os.system('clear')
         header()
         print_table()
+        print_tableBIG()
         game()
 
     os.system('clear')
     put_in_random_number()
     header()
     print_table()
+    print_tableBIG()
     win()
     is_lose()
     game()
@@ -404,4 +409,12 @@ put_in_random_number()
 #____________________________________________________________________________________________________
 os.system('clear') #clear screen
 
+<<<<<<< HEAD
+header()
+print_table()
+print_tableBIG()
+
+game()
+=======
 menu()
+>>>>>>> 67685c1f82f13372a1ca5c8f47a7aaebacd025d4
