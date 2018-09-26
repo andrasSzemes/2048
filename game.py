@@ -285,6 +285,8 @@ def win():
             menu()
         if winOption == '2':
             exit()
+        else:
+            win()
 
 def transpose_table():                                          #have to be symetrical
     global table
