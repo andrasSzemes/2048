@@ -5,6 +5,71 @@ import os #needed to clear screen
 from copy import deepcopy #needed for table copy
 from termcolor import colored
 
+list_0 = [
+'color_print(205, 193, 181, 205, 193, 181, "")',
+'color_print(205, 193, 181, 205, 193, 181, "")',
+'color_print(205, 193, 181, 205, 193, 181, "")',
+'color_print(205, 193, 181, 205, 193, 181, "")',
+'color_print(205, 193, 181, 205, 193, 181, "")',
+'color_print(205, 193, 181, 205, 193, 181, "")',
+'color_print(205, 193, 181, 205, 193, 181, "")',
+'color_print(205, 193, 181, 205, 193, 181, "")',
+'color_print(205, 193, 181, 205, 193, 181, "")',
+'color_print(205, 193, 181, 205, 193, 181, "")',
+]
+
+list_2 = [
+'color_print(119, 110, 101, 238, 228, 219, "")',
+'color_print(119, 110, 101, 238, 228, 219, "")',
+'color_print(119, 110, 101, 238, 228, 219, "  ___  ")',
+'color_print(119, 110, 101, 238, 228, 219, " |__ \ ")',
+'color_print(119, 110, 101, 238, 228, 219, "    ) |")',
+'color_print(119, 110, 101, 238, 228, 219, "   / / ")',
+'color_print(119, 110, 101, 238, 228, 219, "  / /_ ")',
+'color_print(119, 110, 101, 238, 228, 219, " |____|")',
+'color_print(119, 110, 101, 238, 228, 219, "")',
+'color_print(119, 110, 101, 238, 228, 219, "")',
+]
+
+list_4 = [
+'color_print(119, 110, 101, 237, 224, 201, "")',
+'color_print(119, 110, 101, 237, 224, 201, "")',
+'color_print(119, 110, 101, 237, 224, 201, "  _  _   ")',
+'color_print(119, 110, 101, 237, 224, 201, " | || |  ")',
+'color_print(119, 110, 101, 237, 224, 201, " | || |_ ")',
+'color_print(119, 110, 101, 237, 224, 201, " |__   _|")',
+'color_print(119, 110, 101, 237, 224, 201, "    | |  ")',
+'color_print(119, 110, 101, 237, 224, 201, "    |_|  ")',
+'color_print(119, 110, 101, 237, 224, 201, "")',
+'color_print(119, 110, 101, 237, 224, 201, "")',
+]
+
+list_8 = [
+'color_print(249, 246, 242, 241, 177, 125, "")',
+'color_print(249, 246, 242, 241, 177, 125, "")',
+'color_print(249, 246, 242, 241, 177, 125, "   ___  ")',
+'color_print(249, 246, 242, 241, 177, 125, "  / _ \ ")',
+'color_print(249, 246, 242, 241, 177, 125, " | (_) |")',
+'color_print(249, 246, 242, 241, 177, 125, "  > _ < ")',
+'color_print(249, 246, 242, 241, 177, 125, " | (_) |")',
+'color_print(249, 246, 242, 241, 177, 125, "  \___/ ")',
+'color_print(249, 246, 242, 241, 177, 125, "")',
+'color_print(249, 246, 242, 241, 177, 125, "")',
+]
+
+list_16 = [
+'color_print(249, 246, 242, 243, 149, 104, "")',
+'color_print(249, 246, 242, 243, 149, 104, "")',
+'color_print(249, 246, 242, 243, 149, 104, "  __   __  ")',
+'color_print(249, 246, 242, 243, 149, 104, " /_ | / /  ")',
+'color_print(249, 246, 242, 243, 149, 104, "  | |/ /_  ")',
+'color_print(249, 246, 242, 243, 149, 104, "  | |  _ \ ")',
+'color_print(249, 246, 242, 243, 149, 104, "  | | (_) |")',
+'color_print(249, 246, 242, 243, 149, 104, "  |_|\___/ ")',
+'color_print(249, 246, 242, 243, 149, 104, "")',
+'color_print(249, 246, 242, 243, 149, 104, "")',
+]
+
 def header(): #2048 set as header so that it can be diplayed even if the screen is cleared
     width = os.get_terminal_size().columns #gets the width of the terminal size, so that displayed parts can be centered
     s = '''        
@@ -30,9 +95,39 @@ def print_table():
     for i in range(4):
         formatted_table(table[i])
 
+def get_color_escape(r, g, b, background=False):
+    return '\033[{};2;{};{};{}m'.format(48 if background else 38, r, g, b)
+
+def color_print(r1, g1, b1, r2, g2, b2, s):
+    RESET = '\033[0m'
+    print(get_color_escape(r1, g1, b1), get_color_escape(r2, g2, b2, True)
+        , s.center(24)
+        , RESET, end=' ')
+
 def print_tableBIG():
-    pass
-    
+    width = os.get_terminal_size().columns
+    heigh = os.get_terminal_size().lines
+
+    for emptylines in range(int(heigh/2) - 22):
+        print()
+
+    for rowsInTable in range(4):
+        for rowsInASCIINumbers in range(10):
+            print(''.rjust(int(width/2 - 57)), end='')
+            for numbersInTableRow in range(4):
+                if table[rowsInTable][numbersInTableRow] == 0:
+                    exec(list_0[rowsInASCIINumbers])
+                if table[rowsInTable][numbersInTableRow] == 2:
+                    exec(list_2[rowsInASCIINumbers])
+                if table[rowsInTable][numbersInTableRow] == 4:
+                    exec(list_4[rowsInASCIINumbers])
+                if table[rowsInTable][numbersInTableRow] == 8:
+                    exec(list_8[rowsInASCIINumbers])
+                if table[rowsInTable][numbersInTableRow] == 16:
+                    exec(list_16[rowsInASCIINumbers])
+            print('')
+        print()
+
 def put_in_random_number():
     number=[2,4]
     if 0 in table[0]+table[1]+table[2]+table[3]:
@@ -247,15 +342,15 @@ def game():
 
     if doesItChange == table:
         os.system('clear')
-        header()
-        print_table()
+        #header()
+        #print_table()
         print_tableBIG()
         game()
 
     os.system('clear')
     put_in_random_number()
-    header()
-    print_table()
+    #header()
+    #print_table()
     print_tableBIG()
     win()
     is_lose()
@@ -380,8 +475,8 @@ put_in_random_number()
 #____________________________________________________________________________________________________
 os.system('clear') #clear screen
 
-header()
-print_table()
+#header()
+#print_table()
 print_tableBIG()
 
 menu()
