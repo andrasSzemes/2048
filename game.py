@@ -178,15 +178,6 @@ def header(): #2048 set as header so that it can be diplayed even if the screen 
      ""    "**"`       ^"==="`         "*%%%%%%**~    ^"====="`     '''
     print(colored(('\n'.join(l.center(width) for l in s.splitlines())), 'cyan'), '\n')
 
-def formatted_table(table): #sets the format of the table
-    width = os.get_terminal_size().columns #gets the width of the terminal size, so that displayed parts can be centered
-    formatted = u'{:^4} {:^4} {:^4} {:^4}'.format(table[0], table[1], table[2], table[3])
-    print(str(formatted).center(width))
-
-def print_table():
-    for i in range(4):
-        formatted_table(table[i])
-
 def get_color_escape(r, g, b, background=False):
     return '\033[{};2;{};{};{}m'.format(48 if background else 38, r, g, b)
 
@@ -449,15 +440,11 @@ def game():
 
     if doesItChange == table:
         os.system('clear')
-        #header()
-        #print_table()
         print_tableBIG()
         game()
 
     os.system('clear')
     put_in_random_number()
-    #header()
-    #print_table()
     print_tableBIG()
     win()
     is_lose()
@@ -465,9 +452,9 @@ def game():
 
 def menu():
 
-    global table
+    global table                    
     
-    table = [
+    table = [                           #this new table reference is neccessary when the menu is accessed from game()
     [0,0,0,0],
     [0,0,0,0],
     [0,0,0,0],
@@ -580,10 +567,8 @@ put_in_random_number()
 put_in_random_number()
 
 #____________________________________________________________________________________________________
-os.system('clear') #clear screen
+os.system('clear')
 
-#header()
-#print_table()
 print_tableBIG()
 
 menu()
