@@ -217,6 +217,20 @@ def print_tableBIG():
                     exec(list_8[rowsInASCIINumbers])
                 if table[rowsInTable][numbersInTableRow] == 16:
                     exec(list_16[rowsInASCIINumbers])
+                if table[rowsInTable][numbersInTableRow] == 32:
+                    exec(list_32[rowsInASCIINumbers])
+                if table[rowsInTable][numbersInTableRow] == 64:
+                    exec(list_64[rowsInASCIINumbers])
+                if table[rowsInTable][numbersInTableRow] == 128:
+                    exec(list_128[rowsInASCIINumbers])
+                if table[rowsInTable][numbersInTableRow] == 256:
+                    exec(list_256[rowsInASCIINumbers])
+                if table[rowsInTable][numbersInTableRow] == 512:
+                    exec(list_512[rowsInASCIINumbers])
+                if table[rowsInTable][numbersInTableRow] == 1024:
+                    exec(list_1024[rowsInASCIINumbers])
+                if table[rowsInTable][numbersInTableRow] == 2048:
+                    exec(list_2048[rowsInASCIINumbers])
             print('')
         print()
 
