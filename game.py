@@ -4,6 +4,7 @@ import time
 import os #needed to clear screen
 from copy import deepcopy #needed for table copy
 from termcolor import colored
+from playsound import playsound
 
 list_0 = [
 'color_print(205, 193, 181, 205, 193, 181, "")',
