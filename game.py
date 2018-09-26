@@ -165,7 +165,8 @@ def lose(): #probably this will call a new file with an asci art
         exit()
 
 def win():
-    if 16 in table[0]+table[1]+table[2]+table[3]:
+    if 2048 in table[0]+table[1]+table[2]+table[3]:
+        time.sleep(1.5)
         os.system('clear')
         width = os.get_terminal_size().columns
         s = '''
