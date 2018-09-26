@@ -260,6 +260,8 @@ def lose(): #probably this will call a new file with an asci art
         menu()
     if loseOption == '2':
         exit()
+    else:
+        lose()
 
 def win():
     if 2048 in table[0]+table[1]+table[2]+table[3]:
