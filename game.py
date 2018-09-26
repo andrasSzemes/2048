@@ -1,10 +1,12 @@
 import random
 import sys
 import time
-import os #needed to clear screen
-from copy import deepcopy #needed for table copy
+import os
+from copy import deepcopy
 from termcolor import colored
 from playsound import playsound
+
+width = os.get_terminal_size().columns
 
 list_0 = [
 'color_print(205, 193, 181, 205, 193, 181, "")',
@@ -163,8 +165,7 @@ list_2048 = [
 'color_print(249, 246, 242, 235, 194, 43, "")',
 ]
 
-def header(): #2048 set as header so that it can be diplayed even if the screen is cleared
-    width = os.get_terminal_size().columns #gets the width of the terminal size, so that displayed parts can be centered
+def header():
     s = '''        
       .--~*teu.        .n~~%x.             xeee       u+=~~~+u.    
      dF     988Nx    x88X   888.          d888R     z8F      `8N.  
@@ -189,7 +190,6 @@ def color_print(r1, g1, b1, r2, g2, b2, s):
         , RESET, end=' ')
 
 def print_tableBIG():
-    width = os.get_terminal_size().columns
     heigh = os.get_terminal_size().lines
 
     for emptylines in range(int(heigh/2) - 22):
@@ -229,16 +229,15 @@ def print_tableBIG():
 def put_in_random_number():
     number=[2,4]
     if 0 in table[0]+table[1]+table[2]+table[3]:
-        random1=random.randint(0,3)
-        random2=random.randint(0,3)
-        if table[random1][random2] == 0:
-            table[random1][random2] = random.choice(number)
+        coordinate1=random.randint(0,3)
+        coordinate2=random.randint(0,3)
+        if table[coordinate1][coordinate2] == 0:
+            table[coordinate1][coordinate2] = random.choice(number)
         else:
             put_in_random_number()
 
 def lose(): #probably this will call a new file with an asci art
     os.system('clear')
-    width = os.get_terminal_size().columns
 
     s = '''   
     ▓██   ██▓ ▒█████   █    ██    ▓█████▄  ██▓▓█████ ▓█████▄ 
@@ -255,7 +254,7 @@ def lose(): #probably this will call a new file with an asci art
     print("1 Main Menu".center(width))
     print("2 Exit".center(width))
 
-    loseOption = 1
+    loseOption = 'x'
     loseOption = __call__(loseOption)
     if loseOption == '1':
         menu()
@@ -266,7 +265,6 @@ def win():
     if 2048 in table[0]+table[1]+table[2]+table[3]:
         time.sleep(1.5)
         os.system('clear')
-        width = os.get_terminal_size().columns
         s = '''
         ██╗    ██╗██╗███╗   ██╗███╗   ██╗███████╗██████╗     ██╗    ██╗██╗███╗   ██╗███╗   ██╗███████╗██████╗     ██████╗  ██████╗ ██████╗ ██╗  ██╗    ██╗     ██╗   ██╗███╗   ██╗ ██████╗██╗  ██╗
         ██║    ██║██║████╗  ██║████╗  ██║██╔════╝██╔══██╗    ██║    ██║██║████╗  ██║████╗  ██║██╔════╝██╔══██╗    ██╔══██╗██╔═══██╗██╔══██╗██║ ██╔╝    ██║     ██║   ██║████╗  ██║██╔════╝██║  ██║
@@ -279,7 +277,7 @@ def win():
         print("1 Main Menu".center(width))
         print("2 Exit".center(width))
         
-        winOption = 1
+        winOption = 'x'
         winOption = __call__(winOption)
         if winOption == '1':
             menu()
@@ -289,51 +287,43 @@ def win():
 def transpose_table():                                          #have to be symetrical
     global table
     transposedTable = [[],[],[],[]]
-    for i in range(4):                                          #transzponaltban az egyes sorok
-        for x in range(4):                                      #tablaban egyes elemek adott oszlopban
-            transposedTable[i].append(table[x][i])
+    for row in range(4):                                          
+        for coloumn in range(4):                                      
+            transposedTable[row].append(table[coloumn][row])
     table = transposedTable
 
-def transpose_down():
-    global table
-    downTable = [[],[],[],[]]
-    for i in range(4):
-        for j in range(4):
-            downTable[i].append(table[j][i])
-    table=downTable
+def is_lose():              #tries to move to the right, then saves the standing. Resets the table and tries to move to down.
+    global table            #If both have the same results, the game is lost.
 
-def is_lose(): #tries to move to the right, then saves the standing. Resets the table and tries to move to down. If both have the same results, the game is lost.
-    global table
-
-    temp=deepcopy(table) #table bekerül a tempbe
+    temp = deepcopy(table)
 
     move_right()
-    rt=deepcopy(table)
+    rightTemp = deepcopy(table)
 
-    table=deepcopy(temp) #visszaállítom a table-t az elmozdítás előtti (eredeti) pozícióba
+    table = deepcopy(temp) #sets table back to the original position
     move_down()
-    dt=deepcopy(table)
+    downTemp = deepcopy(table)
 
-    table=deepcopy(temp) #visszállítom a table-t, hogy a következő lépés már a játékos előző állásából történjen
+    table = deepcopy(temp) #sets table back to the original position
 
-    if 0 not in table[0]+table[1]+table[2]+table[3] and rt == dt: #ha nincs a táblában 0 és minden elmozdítás után ugyanazt adja vissza
+    if 0 not in table[0]+table[1]+table[2]+table[3] and rightTemp == downTemp:
         lose()
 
 def move_left():
-    for i in range(4):                                          #sorok sorszama
+    for i in range(4):                                          
         virtualRow = []                                         #workingplace
-        for x in range(4):                                      #szamok sorszama
-            if table[i][x] != 0:                                #vegig megy a szamokon, ha nem 0 a workingplace-hez adja 
+        for x in range(4):                                      
+            if table[i][x] != 0:                                 
                 virtualRow.append(table[i][x])             
-        for y in range(len(virtualRow) - 1):                    #vegig megy a szamokon workingplace-ben
-            if virtualRow[y] == virtualRow[y + 1]:              #jobbra levo elemmel megegyezik akkor
-                virtualRow[y] = virtualRow[y] * 2               #ketszerese lesz
-                del virtualRow[y + 1]                           #mellette levo elem kitorlodik!!!
-                virtualRow.append(0)                            #len miatt egy 0-at rak a sor vegere
-        if len(virtualRow) != 4:                                #ha rovidebb a workplace
-            for z in range(4 - len(virtualRow)):                #amennyivel rovidebb annyi 0-at rak hozza
+        for y in range(len(virtualRow) - 1):                    # -1 is needed because using virtualRow[y + 1] in next line
+            if virtualRow[y] == virtualRow[y + 1]:              
+                virtualRow[y] = virtualRow[y] * 2               
+                del virtualRow[y + 1]                          
+                virtualRow.append(0)                            #len(virtualRow) would give error without this
+        if len(virtualRow) != 4:                                #at this point the numbers are merged/shifted
+            for z in range(4 - len(virtualRow)):                #the empty spaces are filled up with 0
                 virtualRow.append(0)
-        table[i] = virtualRow                                   #kezdeti sort megfelelteti workingplace-nek
+        table[i] = virtualRow                                   #the original row is assigned to the workingplace
 
 def move_up():
     transpose_table()
@@ -341,8 +331,7 @@ def move_up():
     transpose_table()
 
 def move_right():
-    for i in range(4):
-
+    for i in range(4):      #every possible move...
             if table[i][1] is 0 and table[i][2] is 0 and table[i][3] == table[i][0]:
                 table[i][3] = table[i][3]*2
                 table[i][0] = 0 
@@ -383,11 +372,11 @@ def move_right():
                 table[i][0] = 0
 
 def move_down():
-    transpose_down()
+    transpose_table()
     move_right()
-    transpose_down()
+    transpose_table()
 
-def __call__(self):
+def __call__(self): #read keystroke without hitting enter
     import sys, tty, termios
     fd = sys.stdin.fileno()
     old_settings = termios.tcgetattr(fd)
@@ -406,20 +395,19 @@ def slowprint(s):
 
 def slowprintX(s):
     spacing = ''
-    #spaces = 
     for i in range(int(width/2 - len(s)/2)):
         spacing = spacing + ' '
     for c in spacing:
         sys.stdout.write(c)
         sys.stdout.flush()
         time.sleep(1./1000)
-    for c in s + '\n':
-        sys.stdout.write(c)
+    for f in s + '\n':
+        sys.stdout.write(f)
         sys.stdout.flush()
         time.sleep(1./1)
 
 def game():
-    doesItChange = deepcopy(table)
+    temp = deepcopy(table)
 
     ASDW = 1
     ASDW = __call__(ASDW)
@@ -439,7 +427,7 @@ def game():
         ASDW = 1
         exit()
 
-    if doesItChange == table:
+    if temp == table:
         os.system('clear')
         print_tableBIG()
         game()
@@ -464,7 +452,6 @@ def menu():
     put_in_random_number()
 
     os.system('clear')
-    width = os.get_terminal_size().columns
     header()
     print("1. New Game".center(width))
     print("2. Rules".center(width))
@@ -473,35 +460,32 @@ def menu():
     print("\n")
     choice = print("Choose an option!".center(width))
 
-    menuOption = 1
+    menuOption = 'x'
     menuOption = __call__(menuOption)
     if menuOption == '1':
         game()
-        menuOption = 1
+        menuOption = 'x'
     if menuOption == '2':
         rules()
-        menuOption = 1
+        menuOption = 'x'
     if menuOption == '3':
         credits()
-        menuOption = 1
+        menuOption = 'x'
     if menuOption == '4':
         exit()
 
 def rules():
     os.system('clear')
-    width = os.get_terminal_size().columns
     print("Use your W, A, S and D keys to move the tiles. When two tiles with the same number touch, they merge into one!".center(width))
     print("Try to get to 2048!".center(width))
     print("Press 1 to go back to the Main Menu.".center(width))
 
-    menuOption = 1
+    menuOption = 'x'
     menuOption = __call__(menuOption)
     if menuOption == '1':
         menu()
 
 def credits():
-    width = os.get_terminal_size().columns
-
     os.system('clear')
 
     s = '''        
@@ -514,12 +498,10 @@ def credits():
     print(colored (('\n'.join(l.center(width) for l in s.splitlines())), 'green'), '\n')
 
     time.sleep(1.5)
-    #os.system('clear')
     slowprint("Directed by: Michael Bay".center(width))
     slowprint("Music: Hans Zimmer".center(width))
     print()
     slowprint("STARRING:".center(width))
-    #os.system('clear')
     print()
     slowprint("Christian Bale - 2048".center(width))
     slowprint("Helen Mirren - 1024".center(width))
@@ -531,12 +513,10 @@ def credits():
     slowprint("David Hasselhoff - 16".center(width))
     slowprint("Andy Serkis - 8 (motion capture)".center(width))
     slowprint("Emma Stone - 4".center(width))
-    #os.system('clear')
     print()
     slowprint("WITH".center(width))
     print()
     time.sleep(1)
-    #os.system('clear')
     slowprint("Samuel L Jackson as 2".center(width))
     time.sleep(3)
     os.system('clear')
