@@ -2,6 +2,7 @@ import random
 import sys
 import time
 import os
+import csv
 from copy import deepcopy
 from termcolor import colored
 from playsound import playsound
@@ -430,6 +431,10 @@ def game():
     if ASDW == 'x':
         ASDW = 1
         exit()
+    if ASDW == 'p':
+        ASDW = 1
+        save_game()
+        exit()
 
     if temp == table:
         os.system('clear')
@@ -458,9 +463,10 @@ def menu():
     os.system('clear')
     header()
     print("1. New Game".center(width))
-    print("2. Rules".center(width))
-    print("3. Credits".center(width))
-    print("4. Exit Game".center(width))
+    print("2. Load Game".center(width))
+    print("3. Rules".center(width))
+    print("4. Credits".center(width))
+    print("5. Exit Game".center(width))
     print("\n")
     choice = print("Choose an option!".center(width))
 
@@ -470,17 +476,21 @@ def menu():
         game()
         menuOption = 'x'
     if menuOption == '2':
-        rules()
+        load_game()
         menuOption = 'x'
     if menuOption == '3':
-        credits()
+        rules()
         menuOption = 'x'
     if menuOption == '4':
+        credits()
+        menuOption = 'x'
+    if menuOption == '5':
         exit()
 
 def rules():
     os.system('clear')
     print("Use your W, A, S and D keys to move the tiles. When two tiles with the same number touch, they merge into one!".center(width))
+    print("During game press P to save and quit, or X to quit without saving.".center(width))
     print("Try to get to 2048!".center(width))
     print("Press 1 to go back to the Main Menu.".center(width))
 
@@ -542,6 +552,25 @@ def credits():
     print("The numbers will return...".center(width))
     time.sleep(3)
     menu()
+
+def save_game():
+    global table
+       
+    with open("saved_game.csv", "w") as f:
+        writer = csv.writer(f)
+        writer.writerows(table)
+
+def load_game():
+    global table
+
+    with open("saved_game.csv", "r") as f:
+        reader = csv.reader(f)
+        temp=[]
+        for row in reader:
+            temp.append([int(val) for val in row])
+    
+    table = temp
+    game()
 
 table = [
 [0,0,0,0],
