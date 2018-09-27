@@ -480,6 +480,8 @@ def menu():
     print("3. Rules".center(width))
     print("4. Credits".center(width))
     print("5. Exit Game".center(width))
+    print("\n\n")
+    print("W. 16 Mode".center(width))
     print("\n")
     choice = print("Choose an option!".center(width))
 
@@ -499,6 +501,9 @@ def menu():
         menuOption = 'x'
     if menuOption == '5':
         exit()
+    if menuOption == 'w':
+        cheatgame()
+        menuOption = 'x'
 
 def rules():
     os.system('clear')
@@ -584,6 +589,70 @@ def load_game():
     
     table = temp
     game()
+
+def cheatwin():
+    if 16 in table[0]+table[1]+table[2]+table[3]:
+        time.sleep(1.0)
+        os.system('clear')
+        s = '''
+        ██╗    ██╗██╗███╗   ██╗███╗   ██╗███████╗██████╗     ██╗    ██╗██╗███╗   ██╗███╗   ██╗███████╗██████╗     ██████╗  ██████╗ ██████╗ ██╗  ██╗    ██╗     ██╗   ██╗███╗   ██╗ ██████╗██╗  ██╗
+        ██║    ██║██║████╗  ██║████╗  ██║██╔════╝██╔══██╗    ██║    ██║██║████╗  ██║████╗  ██║██╔════╝██╔══██╗    ██╔══██╗██╔═══██╗██╔══██╗██║ ██╔╝    ██║     ██║   ██║████╗  ██║██╔════╝██║  ██║
+        ██║ █╗ ██║██║██╔██╗ ██║██╔██╗ ██║█████╗  ██████╔╝    ██║ █╗ ██║██║██╔██╗ ██║██╔██╗ ██║█████╗  ██████╔╝    ██████╔╝██║   ██║██████╔╝█████╔╝     ██║     ██║   ██║██╔██╗ ██║██║     ███████║
+        ██║███╗██║██║██║╚██╗██║██║╚██╗██║██╔══╝  ██╔══██╗    ██║███╗██║██║██║╚██╗██║██║╚██╗██║██╔══╝  ██╔══██╗    ██╔═══╝ ██║   ██║██╔══██╗██╔═██╗     ██║     ██║   ██║██║╚██╗██║██║     ██╔══██║
+        ╚███╔███╔╝██║██║ ╚████║██║ ╚████║███████╗██║  ██║    ╚███╔███╔╝██║██║ ╚████║██║ ╚████║███████╗██║  ██║    ██║     ╚██████╔╝██║  ██║██║  ██╗    ███████╗╚██████╔╝██║ ╚████║╚██████╗██║  ██║
+        ╚══╝╚══╝ ╚═╝╚═╝  ╚═══╝╚═╝  ╚═══╝╚══════╝╚═╝  ╚═╝     ╚══╝╚══╝ ╚═╝╚═╝  ╚═══╝╚═╝  ╚═══╝╚══════╝╚═╝  ╚═╝    ╚═╝      ╚═════╝ ╚═╝  ╚═╝╚═╝  ╚═╝    ╚══════╝ ╚═════╝ ╚═╝  ╚═══╝ ╚═════╝╚═╝  ╚═╝
+        '''
+        print(colored(('\n'.join(l.center(width) for l in s.splitlines())), 'yellow'), '\n')
+        print("1 Main Menu".center(width))
+        print("2 Exit".center(width))
+        
+        winOption = 'x'
+        winOption = __call__(winOption)
+        if winOption == '1':
+            menu()
+        if winOption == '2':
+            exit()
+        else:
+            win()
+
+def cheatgame():
+    temp = deepcopy(table)
+    os.system('clear')
+    print_tableBIG()
+
+    ASDW = 1
+    ASDW = __call__(ASDW)
+    if ASDW == 'a':
+        move_left()
+        ASDW = 1
+    if ASDW == 's':
+        move_down()
+        ASDW = 1
+    if ASDW == 'd':
+        move_right()
+        ASDW = 1
+    if ASDW == 'w':
+        move_up()
+        ASDW = 1
+    if ASDW == 'x':
+        ASDW = 1
+        exit()
+    if ASDW == 'p':
+        ASDW = 1
+        save_game()
+        exit()
+
+    if temp == table:
+        os.system('clear')
+        print_tableBIG()
+        game()
+
+    os.system('clear')
+    put_in_random_number()
+    print_tableBIG()
+    cheatwin()
+    is_lose()
+    cheatgame()
 
 table = [
 [0,0,0,0],
