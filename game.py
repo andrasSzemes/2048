@@ -416,6 +416,8 @@ def slowprintX(s):
 
 def game():
     temp = deepcopy(table)
+    os.system('clear')
+    print_tableBIG()
 
     ASDW = 1
     ASDW = __call__(ASDW)
