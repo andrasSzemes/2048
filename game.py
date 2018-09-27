@@ -337,6 +337,12 @@ def move_up():
 
 def move_right():
     for i in range(4):      #every possible move...
+            if table[i][0] == table[i][1] and table[i][2] == table[i][3]:
+                table[i][3] = table[i][3]*2
+                table[i][2] = table[i][1]*2
+                table[i][1] = 0
+                table[i][0] = 0
+            
             if table[i][1] is 0 and table[i][2] is 0 and table[i][3] == table[i][0]:
                 table[i][3] = table[i][3]*2
                 table[i][0] = 0 
@@ -353,9 +359,6 @@ def move_right():
             
             elif table[i][1] is 0 and table[i][2] == table[i][0]:
                 table[i][2] = table[i][2]*2
-                table[i][0] = 0
-            elif table[i][1] is 0 and table[i][3] == table[i][0]:
-                table[i][3] = table[i][3]*2
                 table[i][0] = 0
             elif table[i][2] is 0 and table[i][3] == table[i][1]:
                 table[i][3] = table[i][3]*2
@@ -453,7 +456,7 @@ def menu():
     global table                    
     
     table = [                           #this new table reference is neccessary when the menu is accessed from game()
-    [0,0,0,0],
+    [2,0,4,2],
     [0,0,0,0],
     [0,0,0,0],
     [0,0,0,0]]
