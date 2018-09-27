@@ -264,9 +264,9 @@ def lose(): #probably this will call a new file with an asci art
     else:
         lose()
 
-def win():
-    if 2048 in table[0]+table[1]+table[2]+table[3]:
-        time.sleep(1.5)
+def win(value):
+    if value in table[0]+table[1]+table[2]+table[3]:
+        #time.sleep(1)
         os.system('clear')
         s = '''
         ██╗    ██╗██╗███╗   ██╗███╗   ██╗███████╗██████╗     ██╗    ██╗██╗███╗   ██╗███╗   ██╗███████╗██████╗     ██████╗  ██████╗ ██████╗ ██╗  ██╗    ██╗     ██╗   ██╗███╗   ██╗ ██████╗██╗  ██╗
@@ -422,7 +422,7 @@ def slowprintX(s):
         sys.stdout.flush()
         time.sleep(1./1)
 
-def game():
+def game(winning_value = 2048):
     temp = deepcopy(table)
     os.system('clear')
     print_tableBIG()
@@ -457,9 +457,9 @@ def game():
     os.system('clear')
     put_in_random_number()
     print_tableBIG()
-    win()
+    win(winning_value)
     is_lose()
-    game()
+    game(winning_value)
 
 def menu():
 
@@ -502,7 +502,7 @@ def menu():
     if menuOption == '5':
         exit()
     if menuOption == 'w':
-        cheatgame()
+        game(16)
         menuOption = 'x'
 
 def rules():
@@ -589,70 +589,6 @@ def load_game():
     
     table = temp
     game()
-
-def cheatwin():
-    if 16 in table[0]+table[1]+table[2]+table[3]:
-        time.sleep(1.0)
-        os.system('clear')
-        s = '''
-        ██╗    ██╗██╗███╗   ██╗███╗   ██╗███████╗██████╗     ██╗    ██╗██╗███╗   ██╗███╗   ██╗███████╗██████╗     ██████╗  ██████╗ ██████╗ ██╗  ██╗    ██╗     ██╗   ██╗███╗   ██╗ ██████╗██╗  ██╗
-        ██║    ██║██║████╗  ██║████╗  ██║██╔════╝██╔══██╗    ██║    ██║██║████╗  ██║████╗  ██║██╔════╝██╔══██╗    ██╔══██╗██╔═══██╗██╔══██╗██║ ██╔╝    ██║     ██║   ██║████╗  ██║██╔════╝██║  ██║
-        ██║ █╗ ██║██║██╔██╗ ██║██╔██╗ ██║█████╗  ██████╔╝    ██║ █╗ ██║██║██╔██╗ ██║██╔██╗ ██║█████╗  ██████╔╝    ██████╔╝██║   ██║██████╔╝█████╔╝     ██║     ██║   ██║██╔██╗ ██║██║     ███████║
-        ██║███╗██║██║██║╚██╗██║██║╚██╗██║██╔══╝  ██╔══██╗    ██║███╗██║██║██║╚██╗██║██║╚██╗██║██╔══╝  ██╔══██╗    ██╔═══╝ ██║   ██║██╔══██╗██╔═██╗     ██║     ██║   ██║██║╚██╗██║██║     ██╔══██║
-        ╚███╔███╔╝██║██║ ╚████║██║ ╚████║███████╗██║  ██║    ╚███╔███╔╝██║██║ ╚████║██║ ╚████║███████╗██║  ██║    ██║     ╚██████╔╝██║  ██║██║  ██╗    ███████╗╚██████╔╝██║ ╚████║╚██████╗██║  ██║
-        ╚══╝╚══╝ ╚═╝╚═╝  ╚═══╝╚═╝  ╚═══╝╚══════╝╚═╝  ╚═╝     ╚══╝╚══╝ ╚═╝╚═╝  ╚═══╝╚═╝  ╚═══╝╚══════╝╚═╝  ╚═╝    ╚═╝      ╚═════╝ ╚═╝  ╚═╝╚═╝  ╚═╝    ╚══════╝ ╚═════╝ ╚═╝  ╚═══╝ ╚═════╝╚═╝  ╚═╝
-        '''
-        print(colored(('\n'.join(l.center(width) for l in s.splitlines())), 'yellow'), '\n')
-        print("1 Main Menu".center(width))
-        print("2 Exit".center(width))
-        
-        winOption = 'x'
-        winOption = __call__(winOption)
-        if winOption == '1':
-            menu()
-        if winOption == '2':
-            exit()
-        else:
-            win()
-
-def cheatgame():
-    temp = deepcopy(table)
-    os.system('clear')
-    print_tableBIG()
-
-    ASDW = 1
-    ASDW = __call__(ASDW)
-    if ASDW == 'a':
-        move_left()
-        ASDW = 1
-    if ASDW == 's':
-        move_down()
-        ASDW = 1
-    if ASDW == 'd':
-        move_right()
-        ASDW = 1
-    if ASDW == 'w':
-        move_up()
-        ASDW = 1
-    if ASDW == 'x':
-        ASDW = 1
-        exit()
-    if ASDW == 'p':
-        ASDW = 1
-        save_game()
-        exit()
-
-    if temp == table:
-        os.system('clear')
-        print_tableBIG()
-        game()
-
-    os.system('clear')
-    put_in_random_number()
-    print_tableBIG()
-    cheatwin()
-    is_lose()
-    cheatgame()
 
 table = [
 [0,0,0,0],
