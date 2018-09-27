@@ -456,7 +456,7 @@ def menu():
     global table                    
     
     table = [                           #this new table reference is neccessary when the menu is accessed from game()
-    [2,0,4,2],
+    [0,0,0,0],
     [0,0,0,0],
     [0,0,0,0],
     [0,0,0,0]]
