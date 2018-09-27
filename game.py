@@ -475,13 +475,13 @@ def menu():
 
     os.system('clear')
     header()
-    print("1. New Game".center(width))
+    print("1. New Game ".center(width))
     print("2. Load Game".center(width))
-    print("3. Rules".center(width))
-    print("4. Credits".center(width))
+    print("3. Rules    ".center(width))
+    print("4. Credits  ".center(width))
     print("5. Exit Game".center(width))
     print("\n\n")
-    print("W. 16 Mode".center(width))
+    print("W. 16 Mode  ".center(width))
     print("\n")
     choice = print("Choose an option!".center(width))
 
