@@ -181,14 +181,10 @@ def header():
      ""    "**"`       ^"==="`         "*%%%%%%**~    ^"====="`     '''
     print(colored(('\n'.join(l.center(width) for l in s.splitlines())), 'cyan'), '\n')
 
-def get_color_escape(r, g, b, background=False):
-    return '\033[{};2;{};{};{}m'.format(48 if background else 38, r, g, b)
-
 def color_print(r1, g1, b1, r2, g2, b2, s):
-    RESET = '\033[0m'
-    print(get_color_escape(r1, g1, b1), get_color_escape(r2, g2, b2, True)
-        , s.center(24)
-        , RESET, end=' ')
+    print('\033[38;2;{};{};{}m'.format(r1, g1, b1), '\033[48;2;{};{};{}m'.format(r2, g2, b2),
+        s.center(24),
+        '\033[0m', end=' ')
 
 def print_tableBIG():
     heigh = os.get_terminal_size().lines
