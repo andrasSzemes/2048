@@ -337,6 +337,14 @@ def move_up():
 
 def move_right():
     for i in range(4):      #every possible move...
+
+            if table[i][0] > 0 and table[i][0] == table[i][1] == table[i][2] == table[i][3]:
+                table[i][3] = table[i][3]*2
+                table[i][2] = table[i][1]*2
+                table[i][1] = 0
+                table[i][0] = 0
+                return
+
             if table[i][0] == table[i][1] and table[i][2] == table[i][3]:
                 table[i][3] = table[i][3]*2
                 table[i][2] = table[i][1]*2
